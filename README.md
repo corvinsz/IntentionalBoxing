@@ -1,4 +1,4 @@
-# Disclaimer:
+# Disclaimer
 I am __not__ a performance expert, so take everything with a grain of salt and do your own testing.
 
 # Intentional boxing of value types
@@ -59,6 +59,7 @@ public static List<object> GetDefaultRanges()
 Running the Performance Profiler again, shows that only 1 `Range` object is created:
 ![range_Alloc_RefType](https://github.com/user-attachments/assets/0a05352c-1415-4f36-81c7-cd98a2d69760)
 
+# Benchmarking
 This behavior can also be observed when running tests against the code shown below:
 ```C#
 using BenchmarkDotNet.Attributes;
