@@ -35,7 +35,7 @@ public static List<object> GetDefaultRanges()
 }
 ```
 When running the code above with Visual Studios [Performance Profiler](https://learn.microsoft.com/visualstudio/profiling/profiling-feature-tour?view=vs-2022), it shows that more than 10.000 `Ranges` were allocated. This kind of defeats the purpose of having a shared object to cache data:
-![range_Alloc_ValueType](https://github.com/user-attachments/assets/07115268-f233-43fd-87eb-2fbcdccdeaee)
+![image](https://github.com/user-attachments/assets/762a36ed-1f3a-4e3b-bef0-52c9187a1868)
 
 
 If you now switch the type of `DefaultRange` to an `object`, you force the value type (`Range`) to get boxed and stored on the heap, unlike before, where it was stored on the stack.
@@ -57,7 +57,7 @@ public static List<object> GetDefaultRanges()
 ```
 
 Running the Performance Profiler again, shows that only 1 `Range` object is created:
-![range_Alloc_RefType](https://github.com/user-attachments/assets/0a05352c-1415-4f36-81c7-cd98a2d69760)
+![image](https://github.com/user-attachments/assets/e8245bbd-66a0-4a69-a262-ffde75b1571c)
 
 # Benchmarking
 This behavior can also be observed when running tests against the code shown below:
@@ -106,8 +106,7 @@ public static class SharedCache
 ```
 
 Results:
-![intentionalBoxingPerf](https://github.com/user-attachments/assets/25f128d3-3998-4d0c-babd-3b000af58faf)
-
+![image](https://github.com/user-attachments/assets/de25517a-39b3-4bc7-acdc-7252fb38e117)
 
 Notice that the performace is degrading linearly. Now whether this is something you should worry about is up to you. 
 Something that is not taken into consideration in the above benchmark, is the fact that the objects have to eventually get unboxed again. But even with unboxing inplace, the benefit of only 1 object being created should still be given.
